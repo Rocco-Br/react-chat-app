@@ -72,6 +72,7 @@ const [text, setText] = useState("")
                         <span>1 min ago</span>
                     </div>
                 </div>
+                <div ref={endRef}></div>
             </div>
             <div className="bottom">
                 <div className="icons">
