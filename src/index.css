@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: url("/bg.jpg");
+  background-image: url("/Warp-1.jpg");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +21,7 @@ body {
   height: 90vh;
   background-color: rgba(17, 25, 40, 0.75);
   backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 5px;
+  border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.125);
   display: flex;
 }
