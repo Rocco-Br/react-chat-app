@@ -7,11 +7,11 @@ const Chat = () => {
   const [text, setText] = useState("");
 
   const endRef = useRef(null);
-
+  // Scroll to bottom of chat window.
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: "smooth" });
   }, []);
-
+  // Emoji picker, puts the picked emoji in your input box
   const handleEmoji = (e) => {
     setText((prev) => prev + e.emoji);
     setOpen(false);
@@ -94,7 +94,7 @@ const Chat = () => {
         </div>
         <div className="message own">
           <div className="texts">
-            <img src="./portofoliopicture.jpg" alt="" />
+            <img src="./bg.jpg" alt="" />
 
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque

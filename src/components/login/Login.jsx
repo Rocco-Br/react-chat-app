@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Login.css";
+import { toast } from "react-toastify";
+
 // if user has uploaded nothing, show default avatar picture
 const Login = () => {
   const [avatar, setAvatar] = useState({
@@ -17,11 +19,15 @@ const Login = () => {
     }
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault(); // prevents page from refreshing when submitting form
+  };
+
   return (
     <div className="login">
       <div className="item">
         <h2>Welcome back,</h2>
-        <form>
+        <form onSubmit={handleLogin}>
           <input type="text" placeholder="Email" name="email" />
           <input type="password" placeholder="Password" name="password" />
           <button>Sign in</button>
