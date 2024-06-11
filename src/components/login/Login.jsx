@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./Login.css";
 import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../lib/firebase";
 
 // if user has uploaded nothing, show default avatar picture
 const Login = () => {
@@ -23,6 +25,20 @@ const Login = () => {
     e.preventDefault(); // prevents page from refreshing when submitting form
   };
 
+  const handleRegister = async (e) => {
+    e.preventDefault(); // prevents page from refreshing when submitting form
+    const formData = new FormData(e.target);
+
+    const { username, email, password } = Object.fromEntries(formData);
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  };
+
   return (
     <div className="login">
       <div className="item">
@@ -36,7 +52,7 @@ const Login = () => {
       <div className="seperator"></div>
       <div className="item">
         <h2>Create an Account</h2>
-        <form>
+        <form onSubmit={handleRegister}>
           <label htmlFor="file">
             <img src={avatar.url || "./avatar.png"} alt="" />
             Upload an image
