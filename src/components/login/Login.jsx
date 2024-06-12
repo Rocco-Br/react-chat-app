@@ -3,6 +3,9 @@ import "./Login.css";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../lib/firebase";
+import { db } from "../../lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import upload from "../../lib/upload";
 
 // if user has uploaded nothing, show default avatar picture
 const Login = () => {
@@ -33,6 +36,22 @@ const Login = () => {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const imgUrl = await upload(avatar.file);
+
+      await setDoc(doc(db, "users", res.user.uid), {
+        username,
+        email,
+        avatar: imgUrl,
+        id: res.user.uid,
+        blocked: [],
+      });
+
+      await setDoc(doc(db, "userchats", res.user.uid), {
+        chats: [],
+      });
+
+      toast.success("Account Created, you can log in now!");
     } catch (err) {
       console.log(err);
       toast.error(err.message);
