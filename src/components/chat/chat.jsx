@@ -22,7 +22,8 @@ const Chat = () => {
     url: "",
   });
 
-  const { chatId, user } = useChatStore();
+  const { chatId, user, isCurrentUserBlocked, isRecieverBlocked } =
+    useChatStore();
   const { currentUser } = useUserStore();
   const endRef = useRef(null);
   // Scroll to bottom of chat window.
@@ -112,9 +113,9 @@ const Chat = () => {
     <div className="chat">
       <div className="top">
         <div className="user">
-          <img src="./avatar.png" alt="" />
+          <img src={user?.avatar || "./avatar.png"} alt="" />
           <div className="texts">
-            <span>Jane Doe</span>
+            <span>{user?.username}</span>
             <p>Lorem ipsum dolor sit amet consectetur.</p>
           </div>
         </div>
@@ -169,6 +170,7 @@ const Chat = () => {
           placeholder="Type a message..."
           value={text}
           onChange={(e) => setText(e.target.value)}
+          disabled={isCurrentUserBlocked || isRecieverBlocked}
         />
         <div className="emoji">
           <img
@@ -180,7 +182,11 @@ const Chat = () => {
             <EmojiPicker open={open} onEmojiClick={handleEmoji} />
           </div>
         </div>
-        <button className="sendButton" onClick={handleSend}>
+        <button
+          className="sendButton"
+          onClick={handleSend}
+          disabled={isCurrentUserBlocked || isRecieverBlocked}
+        >
           Send
         </button>
       </div>

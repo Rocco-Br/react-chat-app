@@ -8,7 +8,8 @@ import { useChatStore } from "../../../lib/chatStore";
 
 const ChatList = () => {
   const [chats, setChats] = useState([]);
-  const [addMode, setAddMode] = useState(false); //Use state hook to detect if user clicks on the + button.
+  const [addMode, setAddMode] = useState(false);
+  const [input, setInput] = useState(""); //Use state hook to detect if user clicks on the + button.
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -63,12 +64,20 @@ const ChatList = () => {
     }
   };
 
+  const filteredChats = chats.filter((c) =>
+    c.user.username.toLowerCase().includes(input.toLowerCase())
+  );
+
   return (
     <div className="chatList">
       <div className="search">
         <div className="searchbar">
           <img src="./search.png" alt="" />
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setInput(e.target.value)}
+          />
         </div>
         {/* checks if button is activated, default is plus */}
         <img
@@ -79,7 +88,7 @@ const ChatList = () => {
         />
       </div>
 
-      {chats.map((chat) => (
+      {filteredChats.map((chat) => (
         <div
           className="item"
           key={chat.chatId}
